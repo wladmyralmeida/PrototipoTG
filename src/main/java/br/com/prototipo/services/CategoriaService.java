@@ -7,17 +7,18 @@ import org.springframework.stereotype.Service;
 
 import br.com.prototipo.domain.Categoria;
 import br.com.prototipo.repositories.CategoriaRepository;
+import br.com.prototipo.services.exception.ObjectNotFoundException;
 
 @Service
 public class CategoriaService {
 
-	//Automaticamente instanciado.
+	// Automaticamente instanciado.
 	@Autowired
 	private CategoriaRepository repository;
-	
+
 	public Categoria buscarPorId(Integer id) {
-		Optional<Categoria> cat =  repository.findById(id);
-		return cat.orElse(null);
-		
+		Optional<Categoria> object = repository.findById(id);
+		return object.orElseThrow(() -> new ObjectNotFoundException(
+				"Desculpe, seu objeto não foi encontrado! Id: " + id + ", Tipo: " + Categoria.class.getName()));
 	}
 }

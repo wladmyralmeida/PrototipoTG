@@ -12,6 +12,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 @Entity
 public class Cancao  implements Serializable {
@@ -23,7 +24,7 @@ public class Cancao  implements Serializable {
 	private String titulo;
 	private String descricao;
 	
-	@JsonIgnore
+	@JsonBackReference
 	@ManyToMany
 	@JoinTable(name = "CANCAO_CATEGORIA",
 		joinColumns = @JoinColumn(name = "cancao_id"),
