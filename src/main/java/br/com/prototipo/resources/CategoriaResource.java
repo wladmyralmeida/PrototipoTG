@@ -1,32 +1,36 @@
 package br.com.prototipo.resources;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.prototipo.domain.Categoria;
+import br.com.prototipo.services.CategoriaService;
 
 @RestController
 @RequestMapping(value="/categorias")
 public class CategoriaResource {
 
-	@RequestMapping(method=RequestMethod.GET)
-	public List<Categoria> listar() {
+	@Autowired
+	private CategoriaService service;
+	
+	@RequestMapping(value="/{id}", method=RequestMethod.GET)
+	public ResponseEntity<?> find(@PathVariable Integer id) {
 		
-		Categoria cat1 = new Categoria(1, "Infantaria");
-		Categoria cat2 = new Categoria(2, "Cavalaria");
-		Categoria cat3 = new Categoria(3, "Artilharia");
-		Categoria cat4 = new Categoria(4, "Comunicações");
+		Categoria cat = service.buscarPorId(id);
+		return ResponseEntity.ok().body(cat);
 		
-		List<Categoria> lista = new ArrayList<>();
-		lista.add(cat1);
-		lista.add(cat2);
-		lista.add(cat3);
-		lista.add(cat4);
-		
-		return lista;
 	}
 }
+
+
+//O controlador REST acessa os Services, os Services acessam os Repositories. 
+
+//No End Point /categorias, além de buscar a categoria, também deve buscar pelo seu /id.
+
+//Para que o spring saiba que o id da url é do id da variável, tem que incluir PathVariable.
+
+//ResponseEntity encapsula informações de uma resposta http para um serviço REST.
