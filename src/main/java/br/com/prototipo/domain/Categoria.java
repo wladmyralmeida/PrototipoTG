@@ -1,40 +1,40 @@
 package br.com.prototipo.domain;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-
+import javax.persistence.ManyToMany;
 @Entity
 public class Categoria implements Serializable {
-	
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private int id;
+	private Integer id;
 	private String arma;
 	
-	public Categoria() {
-		
-	}
+	@ManyToMany(mappedBy="categorias")
+	private List<Cancao> cancoes = new ArrayList<>();
 	
-	public Categoria(int id, String arma) {
+	public Categoria() {
+	}
+
+	public Categoria(Integer id, String arma) {
 		super();
 		this.id = id;
 		this.arma = arma;
 	}
 
-	public int getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
@@ -46,6 +46,15 @@ public class Categoria implements Serializable {
 		this.arma = arma;
 	}
 
+	public List<Cancao> getCancoes() {
+		return cancoes;
+	}
+
+	public void setCancoes(List<Cancao> cancoes) {
+		this.cancoes = cancoes;
+	}
+
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
