@@ -13,33 +13,34 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+
 @Entity
-public class Cancao  implements Serializable {
+public class Servico implements Serializable {
+
 	private static final long serialVersionUID = 1L;
-	
+			
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer id;
-	private String titulo;
-	private String descricao;
+	private String data;
 	
 	@JsonBackReference
 	@ManyToMany
-	@JoinTable(name = "CANCAO_CATEGORIA",
-		joinColumns = @JoinColumn(name = "cancao_id"),
-		inverseJoinColumns = @JoinColumn(name = "categoria_id")
+	@JoinTable(name = "SERVICO_USUARIO",
+		joinColumns = @JoinColumn(name = "servico_id"),
+		inverseJoinColumns = @JoinColumn(name = "usuario_id")
 	)
-	private List<Categoria> categorias = new ArrayList<>();
+	private List<Usuario> usuarios = new ArrayList<>();
+
 	
-	
-	public Cancao() {
+	public Servico() {
+		
 	}
 
-	public Cancao(Integer id, String titulo, String descricao) {
+	public Servico(Integer id, String data) {
 		super();
 		this.id = id;
-		this.titulo = titulo;
-		this.descricao = descricao;
+		this.data = data;
 	}
 
 	public Integer getId() {
@@ -50,36 +51,27 @@ public class Cancao  implements Serializable {
 		this.id = id;
 	}
 
-
-	public String getTitulo() {
-		return titulo;
+	public String getData() {
+		return data;
 	}
 
-	public void setTitulo(String titulo) {
-		this.titulo = titulo;
+	public void setData(String data) {
+		this.data = data;
 	}
 
-	public String getDescricao() {
-		return descricao;
+	public List<Usuario> getUsuarios() {
+		return usuarios;
 	}
 
-	public void setDescricao(String descricao) {
-		this.descricao = descricao;
-	}
-
-	public List<Categoria> getCategorias() {
-		return categorias;
-	}
-
-	public void setCategorias(List<Categoria> categorias) {
-		this.categorias = categorias;
+	public void setUsuarios(List<Usuario> usuarios) {
+		this.usuarios = usuarios;
 	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + id;
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		return result;
 	}
 
@@ -91,12 +83,12 @@ public class Cancao  implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Cancao other = (Cancao) obj;
-		if (id != other.id)
+		Servico other = (Servico) obj;
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
 			return false;
 		return true;
 	}
-	
-	
-
 }

@@ -9,9 +9,13 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import br.com.prototipo.domain.Cancao;
 import br.com.prototipo.domain.Categoria;
+import br.com.prototipo.domain.Servico;
+import br.com.prototipo.domain.Usuario;
+import br.com.prototipo.domain.enums.TipoUsuario;
 import br.com.prototipo.repositories.CancaoRepository;
 import br.com.prototipo.repositories.CategoriaRepository;
-
+import br.com.prototipo.repositories.ServicoRepository;
+import br.com.prototipo.repositories.UsuarioRepository;
 @SpringBootApplication
 public class PrototipoTgApplication implements CommandLineRunner {
 
@@ -19,6 +23,10 @@ public class PrototipoTgApplication implements CommandLineRunner {
 	private CategoriaRepository categoriaRep;
 	@Autowired
 	private CancaoRepository cancaoRep;
+	@Autowired
+	private ServicoRepository servicoRep;
+	@Autowired
+	private UsuarioRepository usuarioRep;
 
 	public static void main(String[] args) {
 		SpringApplication.run(PrototipoTgApplication.class, args);
@@ -51,7 +59,29 @@ public class PrototipoTgApplication implements CommandLineRunner {
 		c2.getCategorias().addAll(Arrays.asList(cat5));
 		c3.getCategorias().addAll(Arrays.asList(cat1));
 
+		Usuario usu1 = new Usuario(null, "wladmyr almeida", "wlad1@gmail.com", "www", "TG-07002", "Charlie", "Cabo",
+				"A+", TipoUsuario.ADMINISTRADOR, true);
+		
+		Usuario usu2 = new Usuario(null, "wladm", "wladmyr@gmail.com", "senha123", "TG-07002", "Bravo", "Sub-Tenente",
+				"O-", TipoUsuario.ADMINISTRADOR, true);
+		
+		Servico s1 = new Servico(null, "09/10/2018");
+		Servico s2 = new Servico(null, "20/10/2017");
+		Servico s3 = new Servico(null, "11/10/2018");
+		
+		usu1.getServicos().addAll(Arrays.asList(s1,s2));
+		usu2.getServicos().addAll(Arrays.asList(s3));
+		
+		usu1.getTelefones().addAll(Arrays.asList("3421-1114", "98713-7778"));
+		usu2.getTelefones().addAll(Arrays.asList("3423-1123", "92138-7778"));
+	
+		s1.getUsuarios().addAll(Arrays.asList(usu1, usu2));
+		s2.getUsuarios().addAll(Arrays.asList(usu2));
+
 		categoriaRep.saveAll(Arrays.asList(cat1, cat2, cat3, cat4, cat5));
 		cancaoRep.saveAll(Arrays.asList(c1, c2, c3));
+		usuarioRep.saveAll(Arrays.asList(usu1, usu2));
+		servicoRep.saveAll(Arrays.asList(s1, s2, s3));
+
 	}
 }
