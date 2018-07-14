@@ -6,13 +6,17 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.CollectionTable;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
@@ -27,7 +31,7 @@ public class Usuario implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	private String nome;
-	private String email;
+	private Integer numero;
 	private String senha;
 	private String organizacaoMilitar;
 	private String pelotao;
@@ -44,16 +48,26 @@ public class Usuario implements Serializable {
 	@ManyToMany(mappedBy = "usuarios")
 	private List<Servico> servicos = new ArrayList<>();
 
+	@OneToOne(cascade = CascadeType.ALL, mappedBy="usuarioDesempenho")
+	private Desempenho desempenho;
+
+	@OneToOne(cascade = CascadeType.ALL, mappedBy="usuarioRelatorio")
+	private Relatorio relatorio;
+	
+	@ManyToOne
+	@JoinColumn(name="ranking_id")
+	private Ranking usuarioRanking;
+	
 	public Usuario() {
 
 	}
 
-	public Usuario(Integer id, String nome, String email, String senha, String organizacaoMilitar, String pelotao,
+	public Usuario(Integer id, String nome, Integer numero, String senha, String organizacaoMilitar, String pelotao,
 			String patente, String tipoSangue, TipoUsuario tipoUsuario, boolean status) {
 		super();
 		this.id = id;
 		this.nome = nome;
-		this.email = email;
+		this.numero = numero;
 		this.senha = senha;
 		this.organizacaoMilitar = organizacaoMilitar;
 		this.pelotao = pelotao;
@@ -79,12 +93,12 @@ public class Usuario implements Serializable {
 		this.nome = nome;
 	}
 
-	public String getEmail() {
-		return email;
+	public Integer getNumero() {
+		return numero;
 	}
 
-	public void setEmail(String email) {
-		this.email = email;
+	public void setNumero(Integer numero) {
+		this.numero = numero;
 	}
 
 	public String getSenha() {
@@ -161,6 +175,22 @@ public class Usuario implements Serializable {
 
 	public void setStatus(boolean status) {
 		this.status = status;
+	}
+
+	public Desempenho getDesempenho() {
+		return desempenho;
+	}
+
+	public void setDesempenho(Desempenho desempenho) {
+		this.desempenho = desempenho;
+	}
+
+	public Relatorio getRelatorio() {
+		return relatorio;
+	}
+
+	public void setRelatorio(Relatorio relatorio) {
+		this.relatorio = relatorio;
 	}
 
 	@Override
