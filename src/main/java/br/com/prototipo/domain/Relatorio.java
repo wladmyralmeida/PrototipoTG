@@ -10,6 +10,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.MapsId;
 import javax.persistence.OneToOne;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 public class Relatorio implements Serializable{
 	
@@ -22,6 +24,7 @@ private static final long serialVersionUID = 1L;
 	private String punicao;
 	private String informacaoAdd;
 	
+	@JsonIgnore
 	@OneToOne
 	@JoinColumn(name="usuario_id")
 	@MapsId

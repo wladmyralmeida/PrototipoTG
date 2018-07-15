@@ -16,6 +16,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 @Entity
 public class Cancao  implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -34,10 +35,11 @@ public class Cancao  implements Serializable {
 	)
 	private List<Categoria> categorias = new ArrayList<>();
 	
+	@JsonIgnore
 	@OneToMany(mappedBy="id.cancao")
 	private Set<ItemPedido> itens = new HashSet<>();
-
 	
+
 	public Cancao() {
 	}
 
@@ -46,14 +48,6 @@ public class Cancao  implements Serializable {
 		this.id = id;
 		this.titulo = titulo;
 		this.descricao = descricao;
-	}
-	
-	public List<Pedido> getPedidos(){
-		List<Pedido> lista = new ArrayList<>();
-		for (ItemPedido x : itens) {
-			lista.add(x.getPedido());
-		}
-		return lista;
 	}
 
 	public Integer getId() {
@@ -89,6 +83,7 @@ public class Cancao  implements Serializable {
 		this.categorias = categorias;
 	}
 
+	//JSON IGNOREEEEEEEEEEEEEEEEEEEEE
 	public Set<ItemPedido> getItens() {
 		return itens;
 	}

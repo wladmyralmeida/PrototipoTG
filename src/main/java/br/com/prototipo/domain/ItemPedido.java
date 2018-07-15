@@ -1,41 +1,57 @@
 package br.com.prototipo.domain;
 
 import java.io.Serializable;
+import java.text.NumberFormat;
+import java.util.Locale;
 
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 public class ItemPedido implements Serializable {
-	
 	private static final long serialVersionUID = 1L;
-
+	
+	@JsonIgnore
 	@EmbeddedId
 	private ItemPedidoPK id = new ItemPedidoPK();
-	
-	private Integer quantidade;
-	private double desconto;
-	private double preco;
 
+	private Integer quantidade;
+	private Double desconto;
+	private Double preco;
+	
 	public ItemPedido() {
-		
 	}
 
-	public ItemPedido(Pedido pedido, Cancao cancao, Integer quantidade, double desconto, double preco) {
+	public ItemPedido(Pedido pedido, Cancao produto, Double desconto, Integer quantidade, Double preco) {
 		super();
 		id.setPedido(pedido);
-		id.setCancao(cancao);
-		this.quantidade = quantidade;
+		id.setCancao(produto);
 		this.desconto = desconto;
+		this.quantidade = quantidade;
 		this.preco = preco;
 	}
 
+	public double getSubTotal() {
+		return (preco - desconto) * quantidade;
+	}
+	
+	@JsonIgnore
 	public Pedido getPedido() {
 		return id.getPedido();
 	}
 	
+	public void setPedido(Pedido pedido) {
+		id.setPedido(pedido);
+	}
+	
 	public Cancao getCancao() {
 		return id.getCancao();
+	}
+	
+	public void setCancao(Cancao produto) {
+		id.setCancao(produto);
 	}
 	
 	public ItemPedidoPK getId() {
@@ -46,6 +62,14 @@ public class ItemPedido implements Serializable {
 		this.id = id;
 	}
 
+	public Double getDesconto() {
+		return desconto;
+	}
+
+	public void setDesconto(Double desconto) {
+		this.desconto = desconto;
+	}
+
 	public Integer getQuantidade() {
 		return quantidade;
 	}
@@ -54,19 +78,11 @@ public class ItemPedido implements Serializable {
 		this.quantidade = quantidade;
 	}
 
-	public double getDesconto() {
-		return desconto;
-	}
-
-	public void setDesconto(double desconto) {
-		this.desconto = desconto;
-	}
-
-	public double getPreco() {
+	public Double getPreco() {
 		return preco;
 	}
 
-	public void setPreco(double preco) {
+	public void setPreco(Double preco) {
 		this.preco = preco;
 	}
 
@@ -95,4 +111,18 @@ public class ItemPedido implements Serializable {
 		return true;
 	}
 	
+	@Override
+	public String toString() {
+		NumberFormat nf = NumberFormat.getCurrencyInstance(new Locale("pt", "BR"));
+		StringBuilder builder = new StringBuilder();
+		builder.append(getCancao().getDescricao());
+		builder.append(", Qte: ");
+		builder.append(getQuantidade());
+		builder.append(", Preço unitário: ");
+		builder.append(nf.format(getPreco()));
+		builder.append(", Subtotal: ");
+		builder.append(nf.format(getSubTotal()));
+		builder.append("\n");
+		return builder.toString();
+	}
 }

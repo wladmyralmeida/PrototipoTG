@@ -7,21 +7,21 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.prototipo.domain.Categoria;
-import br.com.prototipo.services.CategoriaService;
+import br.com.prototipo.domain.Pagamento;
+import br.com.prototipo.services.PagamentoService;
 
 @RestController
-@RequestMapping(value="/categorias")
-public class CategoriaResource {
+@RequestMapping(value="/pagamentos")
+public class PagamentoResource {
 
 	@Autowired
-	private CategoriaService service;
+	private PagamentoService service;
 	
 	@RequestMapping(value="/{id}", method=RequestMethod.GET)
 	public ResponseEntity<?> find(@PathVariable Integer id) {
 		
-		Categoria cat = service.buscarPorId(id);
-		return ResponseEntity.ok().body(cat);
+		Pagamento cancao = service.buscarPorId(id);
+		return ResponseEntity.ok().body(cancao);
 		
 	}
 }

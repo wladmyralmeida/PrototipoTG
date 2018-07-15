@@ -12,7 +12,6 @@ import br.com.prototipo.services.exception.ObjectNotFoundException;
 @Service
 public class UsuarioService {
 
-	// Automaticamente instanciado.
 	@Autowired
 	private UsuarioRepository repository;
 

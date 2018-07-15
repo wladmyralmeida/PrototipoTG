@@ -12,7 +12,6 @@ import br.com.prototipo.services.exception.ObjectNotFoundException;
 @Service
 public class CategoriaService {
 
-	// Automaticamente instanciado.
 	@Autowired
 	private CategoriaRepository repository;
 

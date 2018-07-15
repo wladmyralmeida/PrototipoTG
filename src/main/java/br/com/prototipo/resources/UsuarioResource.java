@@ -20,8 +20,8 @@ public class UsuarioResource {
 	@RequestMapping(value="/{id}", method=RequestMethod.GET)
 	public ResponseEntity<?> find(@PathVariable Integer id) {
 		
-		Usuario cat = service.buscarPorId(id);
-		return ResponseEntity.ok().body(cat);
+		Usuario usuario = service.buscarPorId(id);
+		return ResponseEntity.ok().body(usuario);
 		
 	}
 }

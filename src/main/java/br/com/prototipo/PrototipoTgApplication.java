@@ -150,9 +150,9 @@ public class PrototipoTgApplication implements CommandLineRunner {
 		pedRep.saveAll(Arrays.asList(ped1, ped2));
 		pagRep.saveAll(Arrays.asList(pgt1, pgt2));
 
-		ItemPedido ip1 = new ItemPedido(ped1, c1, 1, 10.00, 20.00);
-		ItemPedido ip2 = new ItemPedido(ped2, c2, 2, 15.00, 30.00);
-		ItemPedido ip3 = new ItemPedido(ped2, c3, 3, 20.00, 50.00);
+		ItemPedido ip1 = new ItemPedido(ped1, c1, 10.00, 2, 20.00);
+		ItemPedido ip2 = new ItemPedido(ped2, c2, 30.00, 4, 30.00);
+		ItemPedido ip3 = new ItemPedido(ped2, c3, 50.00, 6, 50.00);
 
 		ped1.getItens().addAll(Arrays.asList(ip1));
 		ped2.getItens().addAll(Arrays.asList(ip2, ip3));

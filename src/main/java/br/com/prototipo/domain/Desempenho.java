@@ -10,6 +10,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.MapsId;
 import javax.persistence.OneToOne;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 
 @Entity
 public class Desempenho implements Serializable {
@@ -26,14 +28,14 @@ public class Desempenho implements Serializable {
 	private Double corrida;
 	private Integer barra;
 	private String alerta;
-
+	
+	@JsonIgnore
 	@OneToOne
 	@JoinColumn(name="usuario_id")
 	@MapsId
 	private Usuario usuarioDesempenho;	
 	
 //
-//	@JsonManagedReference
 //	@ManyToOne
 //	@JoinColumn(name="ranking_id")
 //	private Ranking desempenhoRanking;

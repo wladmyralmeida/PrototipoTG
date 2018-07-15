@@ -17,7 +17,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import br.com.prototipo.domain.enums.TipoUsuario;
 
@@ -43,7 +43,6 @@ public class Usuario implements Serializable {
 	@CollectionTable(name = "TELEFONE")
 	private Set<String> telefones = new HashSet<>();
 
-	@JsonManagedReference
 	@ManyToMany(mappedBy = "usuarios")
 	private List<Servico> servicos = new ArrayList<>();
 
@@ -52,11 +51,11 @@ public class Usuario implements Serializable {
 
 	@OneToOne(cascade = CascadeType.ALL, mappedBy="usuarioRelatorio")
 	private Relatorio relatorio;
-	
+
+	@JsonIgnore
 	@OneToMany(mappedBy="usuario")
-	private List<Pedido> pedidos = new ArrayList<>();
-	
-//	@JsonManagedReference
+	private List<Pedido> pedido = new ArrayList<>();
+
 //	@ManyToOne
 //	@JoinColumn(name="ranking_id")
 //	private Ranking usuarioRanking;
@@ -197,11 +196,11 @@ public class Usuario implements Serializable {
 	}
 
 	public List<Pedido> getPedidos() {
-		return pedidos;
+		return pedido;
 	}
 
-	public void setPedidos(List<Pedido> pedidos) {
-		this.pedidos = pedidos;
+	public void setPedidos(List<Pedido> pedido) {
+		this.pedido = pedido;
 	}
 
 	@Override
