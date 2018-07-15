@@ -13,9 +13,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
@@ -54,9 +53,13 @@ public class Usuario implements Serializable {
 	@OneToOne(cascade = CascadeType.ALL, mappedBy="usuarioRelatorio")
 	private Relatorio relatorio;
 	
-	@ManyToOne
-	@JoinColumn(name="ranking_id")
-	private Ranking usuarioRanking;
+	@OneToMany(mappedBy="usuario")
+	private List<Pedido> pedidos = new ArrayList<>();
+	
+//	@JsonManagedReference
+//	@ManyToOne
+//	@JoinColumn(name="ranking_id")
+//	private Ranking usuarioRanking;
 	
 	public Usuario() {
 
@@ -191,6 +194,14 @@ public class Usuario implements Serializable {
 
 	public void setRelatorio(Relatorio relatorio) {
 		this.relatorio = relatorio;
+	}
+
+	public List<Pedido> getPedidos() {
+		return pedidos;
+	}
+
+	public void setPedidos(List<Pedido> pedidos) {
+		this.pedidos = pedidos;
 	}
 
 	@Override

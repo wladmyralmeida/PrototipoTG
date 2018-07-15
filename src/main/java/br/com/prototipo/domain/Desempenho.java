@@ -7,8 +7,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.MapsId;
 import javax.persistence.OneToOne;
+
 
 @Entity
 public class Desempenho implements Serializable {
@@ -27,11 +28,15 @@ public class Desempenho implements Serializable {
 	private String alerta;
 
 	@OneToOne
+	@JoinColumn(name="usuario_id")
+	@MapsId
 	private Usuario usuarioDesempenho;	
-
-	@ManyToOne
-	@JoinColumn(name="ranking_id")
-	private Ranking desempenhoRanking;
+	
+//
+//	@JsonManagedReference
+//	@ManyToOne
+//	@JoinColumn(name="ranking_id")
+//	private Ranking desempenhoRanking;
 	
 	public Desempenho() {
 		

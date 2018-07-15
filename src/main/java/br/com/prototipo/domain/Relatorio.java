@@ -6,6 +6,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.MapsId;
 import javax.persistence.OneToOne;
 
 @Entity
@@ -21,6 +23,8 @@ private static final long serialVersionUID = 1L;
 	private String informacaoAdd;
 	
 	@OneToOne
+	@JoinColumn(name="usuario_id")
+	@MapsId
 	private Usuario usuarioRelatorio;
 	
 	public Relatorio() {
