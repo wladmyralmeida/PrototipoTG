@@ -10,14 +10,14 @@ import javax.persistence.JoinColumn;
 import javax.persistence.MapsId;
 import javax.persistence.OneToOne;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-
 
 @Entity
 public class Desempenho implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
@@ -28,22 +28,17 @@ public class Desempenho implements Serializable {
 	private Double corrida;
 	private Integer barra;
 	private String alerta;
-	
+
 	@JsonIgnore
 	@OneToOne
-	@JoinColumn(name="usuario_id")
+	@JoinColumn(name = "usuario_id")
 	@MapsId
-	private Usuario usuarioDesempenho;	
-	
-//
-//	@ManyToOne
-//	@JoinColumn(name="ranking_id")
-//	private Ranking desempenhoRanking;
+	private Usuario usuarioDesempenho;
 	
 	public Desempenho() {
-		
+
 	}
-	
+
 	public Desempenho(Integer id, String atual, String objetivo, Integer flexao, Integer abdominal, Double corrida,
 			Integer barra, String alerta, Usuario usuarioDesempenho) {
 		super();
@@ -122,6 +117,7 @@ public class Desempenho implements Serializable {
 		this.alerta = alerta;
 	}
 
+	@JsonBackReference
 	public Usuario getUsuarioDesempenho() {
 		return usuarioDesempenho;
 	}
@@ -154,6 +150,5 @@ public class Desempenho implements Serializable {
 			return false;
 		return true;
 	}
-	
-	
+
 }

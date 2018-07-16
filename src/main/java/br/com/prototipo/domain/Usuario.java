@@ -17,6 +17,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import br.com.prototipo.domain.enums.TipoUsuario;
@@ -46,19 +47,15 @@ public class Usuario implements Serializable {
 	@ManyToMany(mappedBy = "usuarios")
 	private List<Servico> servicos = new ArrayList<>();
 
-	@OneToOne(cascade = CascadeType.ALL, mappedBy="usuarioDesempenho")
+	@OneToOne(cascade = CascadeType.ALL, mappedBy = "usuarioDesempenho")
 	private Desempenho desempenho;
 
-	@OneToOne(cascade = CascadeType.ALL, mappedBy="usuarioRelatorio")
+	@OneToOne(cascade = CascadeType.ALL, mappedBy = "usuarioRelatorio")
 	private Relatorio relatorio;
 
 	@JsonIgnore
-	@OneToMany(mappedBy="usuario")
+	@OneToMany(mappedBy = "usuario")
 	private List<Pedido> pedido = new ArrayList<>();
-
-//	@ManyToOne
-//	@JoinColumn(name="ranking_id")
-//	private Ranking usuarioRanking;
 	
 	public Usuario() {
 
@@ -158,7 +155,8 @@ public class Usuario implements Serializable {
 	public void setTelefones(Set<String> telefones) {
 		this.telefones = telefones;
 	}
-
+	
+	@JsonBackReference
 	public List<Servico> getServicos() {
 		return servicos;
 	}
@@ -187,6 +185,7 @@ public class Usuario implements Serializable {
 		this.desempenho = desempenho;
 	}
 
+	@JsonBackReference
 	public Relatorio getRelatorio() {
 		return relatorio;
 	}
@@ -194,7 +193,8 @@ public class Usuario implements Serializable {
 	public void setRelatorio(Relatorio relatorio) {
 		this.relatorio = relatorio;
 	}
-
+	
+	@JsonBackReference
 	public List<Pedido> getPedidos() {
 		return pedido;
 	}
@@ -203,6 +203,14 @@ public class Usuario implements Serializable {
 		this.pedido = pedido;
 	}
 
+	public List<Pedido> getPedido() {
+		return pedido;
+	}
+
+	public void setPedido(List<Pedido> pedido) {
+		this.pedido = pedido;
+	}
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;

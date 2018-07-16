@@ -17,6 +17,7 @@ import br.com.prototipo.domain.Pagamento;
 import br.com.prototipo.domain.PagamentoComBoleto;
 import br.com.prototipo.domain.PagamentoComCartao;
 import br.com.prototipo.domain.Pedido;
+import br.com.prototipo.domain.Ranking;
 import br.com.prototipo.domain.Relatorio;
 import br.com.prototipo.domain.Servico;
 import br.com.prototipo.domain.Usuario;
@@ -29,6 +30,7 @@ import br.com.prototipo.repositories.EstudoRepository;
 import br.com.prototipo.repositories.ItemPedidoRepository;
 import br.com.prototipo.repositories.PagamentoRepository;
 import br.com.prototipo.repositories.PedidoRepository;
+import br.com.prototipo.repositories.RankingRepository;
 import br.com.prototipo.repositories.RelatorioRepository;
 import br.com.prototipo.repositories.ServicoRepository;
 import br.com.prototipo.repositories.UsuarioRepository;
@@ -56,6 +58,8 @@ public class PrototipoTgApplication implements CommandLineRunner {
 	private PagamentoRepository pagRep;
 	@Autowired
 	private ItemPedidoRepository itemPedRep;
+	@Autowired
+	private RankingRepository rankingRep;
 
 	public static void main(String[] args) {
 		SpringApplication.run(PrototipoTgApplication.class, args);
@@ -125,9 +129,14 @@ public class PrototipoTgApplication implements CommandLineRunner {
 		Estudo e1 = new Estudo(null, "Provas", "Prova EsFCEx");
 		Estudo e2 = new Estudo(null, "Slides", "Slide Escolta Ofensiva");
 		Estudo e3 = new Estudo(null, "Material Diverso", "Como calcular Azimute");
-
+		
+		Ranking rk1 = new Ranking(null, "Conjunto Completo Exército Brasileiro");
+		rk1.getUsuarios().add(usu1);
+		rk1.getUsuarios().add(usu2);
+		
 		usuarioRep.saveAll(Arrays.asList(usu1, usu2));
 		desempenhoRep.saveAll(Arrays.asList(dp1, dp2));
+		rankingRep.saveAll(Arrays.asList(rk1));
 		relatorioRep.saveAll(Arrays.asList(r1, r2));
 		categoriaRep.saveAll(Arrays.asList(cat1, cat2, cat3, cat4, cat5));
 		cancaoRep.saveAll(Arrays.asList(c1, c2, c3));
