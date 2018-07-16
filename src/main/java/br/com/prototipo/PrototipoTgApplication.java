@@ -74,7 +74,8 @@ public class PrototipoTgApplication implements CommandLineRunner {
 		Categoria cat2 = new Categoria(null, "Cavalaria");
 		Categoria cat3 = new Categoria(null, "Artilharia");
 		Categoria cat4 = new Categoria(null, "Comunicações");
-		Categoria cat5 = new Categoria(null, "Diversas");
+		Categoria cat5 = new Categoria(null, "Polícia Militar");
+		Categoria cat6 = new Categoria(null, "Diversas");
 
 		Cancao c1 = new Cancao(null, "Olha a Dona Mag",
 				"Olha a Dona MAG no Terreno camuflada, Pronta para ser a qualquer hora acionada.");
@@ -138,7 +139,7 @@ public class PrototipoTgApplication implements CommandLineRunner {
 		desempenhoRep.saveAll(Arrays.asList(dp1, dp2));
 		rankingRep.saveAll(Arrays.asList(rk1));
 		relatorioRep.saveAll(Arrays.asList(r1, r2));
-		categoriaRep.saveAll(Arrays.asList(cat1, cat2, cat3, cat4, cat5));
+		categoriaRep.saveAll(Arrays.asList(cat1, cat2, cat3, cat4, cat5, cat6));
 		cancaoRep.saveAll(Arrays.asList(c1, c2, c3));
 		servicoRep.saveAll(Arrays.asList(s1, s2, s3));
 		estudoRep.saveAll(Arrays.asList(e1, e2, e3));
