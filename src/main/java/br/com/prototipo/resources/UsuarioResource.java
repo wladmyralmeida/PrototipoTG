@@ -1,13 +1,22 @@
 package br.com.prototipo.resources;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.prototipo.domain.Usuario;
+import br.com.prototipo.dto.UsuarioDTO;
 import br.com.prototipo.services.UsuarioService;
 
 @RestController
@@ -23,6 +32,43 @@ public class UsuarioResource {
 		Usuario usuario = service.find(id);
 		return ResponseEntity.ok().body(usuario);
 		
+	}
+	
+	@RequestMapping(value="/{id}", method=RequestMethod.PUT)
+	public ResponseEntity<Void> update(@Valid @RequestBody UsuarioDTO objDTO, @PathVariable Integer id){
+		Usuario obj = service.fromDTO(objDTO);
+		obj.setId(id);
+		obj = service.update(obj);
+		return ResponseEntity.noContent().build();
+	}
+	
+	@RequestMapping(value="/{id}", method=RequestMethod.DELETE)
+	public ResponseEntity<Void> delete(@PathVariable Integer id) {
+		service.delete(id);
+		return ResponseEntity.noContent().build();
+	}
+	
+	@RequestMapping(method=RequestMethod.GET)
+	public ResponseEntity<List<UsuarioDTO>> findAll() {
+		List<Usuario> list = service.findAll();
+		//Percorre a lista pra cada elemento instancia o DTO correspondente. 
+		//Com apelido obj e pra cada operador Arrow Function. Depois converte tudo de volta pra uma lista.
+		List<UsuarioDTO> listDTO = list.stream().map(obj -> new UsuarioDTO(obj)).collect(Collectors.toList());
+		return ResponseEntity.ok().body(listDTO);
+	}
+	
+	//RequestParam faz ser opcional.
+	@RequestMapping(value="/page", method=RequestMethod.GET)
+	public ResponseEntity<Page<UsuarioDTO>> findPage(
+			@RequestParam(value="page", defaultValue="0") Integer page,
+			@RequestParam(value="linesPerPage", defaultValue="24") Integer linesPerPage,
+			@RequestParam(value="orderBy", defaultValue="arma") String orderBy, 
+			@RequestParam(value="direction", defaultValue="ASC") String direction) {
+		Page<Usuario> list = service.findPage(page, linesPerPage, orderBy, direction);
+		//Percorre a lista pra cada elemento instancia o DTO correspondente. 
+		//Com apelido obj e pra cada operador Arrow Function. Depois converte tudo de volta pra uma lista.
+		Page<UsuarioDTO> listDTO = list.map(obj -> new UsuarioDTO(obj));
+		return ResponseEntity.ok().body(listDTO);
 	}
 }
 

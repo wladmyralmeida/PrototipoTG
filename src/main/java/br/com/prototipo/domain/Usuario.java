@@ -72,7 +72,7 @@ public class Usuario implements Serializable {
 		this.pelotao = pelotao;
 		this.patente = patente;
 		this.tipoSangue = tipoSangue;
-		this.tipoUsuario = tipoUsuario.getCod();
+		this.tipoUsuario = (tipoUsuario == null) ? null : tipoUsuario.getCod();
 		this.status = status;
 	}
 
