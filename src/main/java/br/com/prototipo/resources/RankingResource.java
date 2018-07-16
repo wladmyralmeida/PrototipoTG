@@ -18,9 +18,9 @@ public class RankingResource {
 	private RankingService service;
 	
 	@RequestMapping(value="/{id}", method=RequestMethod.GET)
-	public ResponseEntity<?> find(@PathVariable Integer id) {
+	public ResponseEntity<Ranking> find(@PathVariable Integer id) {
 		
-		Ranking ranking = service.buscarPorId(id);
+		Ranking ranking = service.find(id);
 		return ResponseEntity.ok().body(ranking);
 		
 	}

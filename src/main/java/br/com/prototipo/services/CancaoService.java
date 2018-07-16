@@ -15,7 +15,7 @@ public class CancaoService {
 	@Autowired
 	private CancaoRepository repository;
 
-	public Cancao buscarPorId(Integer id) {
+	public Cancao find(Integer id) {
 		Optional<Cancao> object = repository.findById(id);
 		return object.orElseThrow(() -> new ObjectNotFoundException(
 				"Desculpe, seu objeto não foi encontrado! Id: " + id + ", Tipo: " + Cancao.class.getName()));

@@ -18,9 +18,9 @@ public class RelatorioResource {
 	private RelatorioService service;
 	
 	@RequestMapping(value="/{id}", method=RequestMethod.GET)
-	public ResponseEntity<?> find(@PathVariable Integer id) {
+	public ResponseEntity<Relatorio> find(@PathVariable Integer id) {
 		
-		Relatorio relatorio = service.buscarPorId(id);
+		Relatorio relatorio = service.find(id);
 		return ResponseEntity.ok().body(relatorio);
 		
 	}

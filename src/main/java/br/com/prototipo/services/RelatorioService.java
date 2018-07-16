@@ -15,7 +15,7 @@ public class RelatorioService {
 	@Autowired
 	private RelatorioRepository repository;
 
-	public Relatorio buscarPorId(Integer id) {
+	public Relatorio find(Integer id) {
 		Optional<Relatorio> object = repository.findById(id);
 		return object.orElseThrow(() -> new ObjectNotFoundException(
 				"Desculpe, seu objeto não foi encontrado! Id: " + id + ", Tipo: " + Relatorio.class.getName()));

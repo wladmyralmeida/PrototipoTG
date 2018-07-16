@@ -18,9 +18,9 @@ public class DesempenhoResource {
 	private DesempenhoService service;
 	
 	@RequestMapping(value="/{id}", method=RequestMethod.GET)
-	public ResponseEntity<?> find(@PathVariable Integer id) {
+	public ResponseEntity<Desempenho> find(@PathVariable Integer id) {
 		
-		Desempenho desempenho = service.buscarPorId(id);
+		Desempenho desempenho = service.find(id);
 		return ResponseEntity.ok().body(desempenho);
 		
 	}

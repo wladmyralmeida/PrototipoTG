@@ -18,9 +18,9 @@ public class CancaoResource {
 	private CancaoService service;
 	
 	@RequestMapping(value="/{id}", method=RequestMethod.GET)
-	public ResponseEntity<?> find(@PathVariable Integer id) {
+	public ResponseEntity<Cancao> find(@PathVariable Integer id) {
 		
-		Cancao cancao = service.buscarPorId(id);
+		Cancao cancao = service.find(id);
 		return ResponseEntity.ok().body(cancao);
 		
 	}

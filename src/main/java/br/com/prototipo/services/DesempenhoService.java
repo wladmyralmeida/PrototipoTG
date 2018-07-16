@@ -15,7 +15,7 @@ public class DesempenhoService {
 	@Autowired
 	private DesempenhoRepository repository;
 
-	public Desempenho buscarPorId(Integer id) {
+	public Desempenho find(Integer id) {
 		Optional<Desempenho> object = repository.findById(id);
 		return object.orElseThrow(() -> new ObjectNotFoundException(
 				"Desculpe, seu objeto não foi encontrado! Id: " + id + ", Tipo: " + Desempenho.class.getName()));

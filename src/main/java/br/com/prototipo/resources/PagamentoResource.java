@@ -18,9 +18,9 @@ public class PagamentoResource {
 	private PagamentoService service;
 	
 	@RequestMapping(value="/{id}", method=RequestMethod.GET)
-	public ResponseEntity<?> find(@PathVariable Integer id) {
+	public ResponseEntity<Pagamento> find(@PathVariable Integer id) {
 		
-		Pagamento cancao = service.buscarPorId(id);
+		Pagamento cancao = service.find(id);
 		return ResponseEntity.ok().body(cancao);
 		
 	}

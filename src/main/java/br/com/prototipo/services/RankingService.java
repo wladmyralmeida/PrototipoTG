@@ -15,7 +15,7 @@ public class RankingService {
 	@Autowired
 	private RankingRepository repository;
 
-	public Ranking buscarPorId(Integer id) {
+	public Ranking find(Integer id) {
 		Optional<Ranking> object = repository.findById(id);
 		return object.orElseThrow(() -> new ObjectNotFoundException(
 				"Desculpe, seu objeto não foi encontrado! Id: " + id + ", Tipo: " + Ranking.class.getName()));
