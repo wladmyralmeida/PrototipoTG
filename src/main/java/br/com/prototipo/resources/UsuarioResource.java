@@ -1,5 +1,6 @@
 package br.com.prototipo.resources;
 
+import java.net.URI;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -14,9 +15,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import br.com.prototipo.domain.Usuario;
 import br.com.prototipo.dto.UsuarioDTO;
+import br.com.prototipo.dto.UsuarioNewDTO;
 import br.com.prototipo.services.UsuarioService;
 
 @RestController
@@ -33,6 +36,15 @@ public class UsuarioResource {
 		return ResponseEntity.ok().body(usuario);
 		
 	}
+	
+	@RequestMapping(method=RequestMethod.POST)
+		public ResponseEntity<Void> insert(@Valid @RequestBody UsuarioNewDTO objDto) {
+			Usuario obj = service.fromDTO(objDto);
+			obj = service.insert(obj);
+			URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
+					.path("/{id}").buildAndExpand(obj.getId()).toUri();
+			return ResponseEntity.created(uri).build();
+		}
 	
 	@RequestMapping(value="/{id}", method=RequestMethod.PUT)
 	public ResponseEntity<Void> update(@Valid @RequestBody UsuarioDTO objDTO, @PathVariable Integer id){

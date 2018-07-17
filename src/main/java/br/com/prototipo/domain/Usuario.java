@@ -47,9 +47,11 @@ public class Usuario implements Serializable {
 	@ManyToMany(mappedBy = "usuarios")
 	private List<Servico> servicos = new ArrayList<>();
 
+	@JsonIgnore
 	@OneToOne(cascade = CascadeType.ALL, mappedBy = "usuarioDesempenho")
 	private Desempenho desempenho;
 
+	@JsonIgnore
 	@OneToOne(cascade = CascadeType.ALL, mappedBy = "usuarioRelatorio")
 	private Relatorio relatorio;
 

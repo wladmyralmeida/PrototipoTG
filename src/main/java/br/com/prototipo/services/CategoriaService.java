@@ -28,14 +28,15 @@ public class CategoriaService {
 				"Desculpe, seu objeto não foi encontrado! Id: " + id + ", Tipo: " + Categoria.class.getName()));
 	}
 
-	public Categoria insert(Categoria cat) {
-		cat.setId(null);
-		return repository.save(cat);
+	public Categoria insert(Categoria obj) {
+		obj.setId(null);
+		return repository.save(obj);
 	}
 
-	public Categoria update(Categoria cat) {
-		find(cat.getId());
-		return repository.save(cat);
+	public Categoria update(Categoria obj) {
+		Categoria newObj = find(obj.getId());
+		updateData(newObj, obj);
+		return repository.save(newObj);
 	}
 
 	public void delete(Integer id) {
@@ -58,5 +59,9 @@ public class CategoriaService {
 	
 	public Categoria fromDTO(CategoriaDTO objDTO) {
 		return new Categoria(objDTO.getId(), objDTO.getArma());
+	}
+	
+	private void updateData(Categoria newObj, Categoria obj) {
+		newObj.setArma(obj.getArma());
 	}
 }

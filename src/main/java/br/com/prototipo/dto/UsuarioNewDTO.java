@@ -6,49 +6,32 @@ import javax.validation.constraints.NotEmpty;
 
 import org.hibernate.validator.constraints.Length;
 
-import br.com.prototipo.domain.Usuario;
 
-public class UsuarioDTO implements Serializable {
-	
+
+public class UsuarioNewDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
-
-	private Integer id;
 	
-	@NotEmpty(message="Preenchimento Obrigatório")
-	@Length(min=5, max=100, message="O tamanho deve ser entre 5 e 100 caracteres")
+	@NotEmpty(message="Preenchimento obrigatório")
+	@Length(min=5, max=120, message="O tamanho deve ser entre 5 e 120 caracteres")
 	private String nome;
-	
 	private Integer numero;
 	private String organizacaoMilitar;
 	private String pelotao;
 	private String patente;
 	private String tipoSangue;
-	private Integer tipoUsuario;
 	private boolean status;
+	private Integer tipo;
+	@NotEmpty(message="Preenchimento obrigatório")
+	private String senha;
 	
-	public UsuarioDTO() {
-		
-	}
+	@NotEmpty(message="Preenchimento obrigatório")
+	private String telefone1;
 
-	public UsuarioDTO(Usuario obj) {
-		id = obj.getId();
-		nome = obj.getNome();
-		numero = obj.getNumero();
-		organizacaoMilitar = obj.getOrganizacaoMilitar();
-		pelotao = obj.getPelotao();
-		patente = obj.getPatente();
-		//TA FALTANDO O TIPO DO USUARIO
-		tipoSangue = obj.getTipoSangue();
-		status = obj.getStatus();
-	}
-
+	private String telefone2;
 	
-	public Integer getId() {
-		return id;
-	}
-
-	public void setId(Integer id) {
-		this.id = id;
+	private String telefone3;
+	
+	public UsuarioNewDTO() {
 	}
 
 	public String getNome() {
@@ -99,19 +82,51 @@ public class UsuarioDTO implements Serializable {
 		this.tipoSangue = tipoSangue;
 	}
 
-	public Integer getTipoUsuario() {
-		return tipoUsuario;
-	}
-
-	public void setTipoUsuario(Integer tipoUsuario) {
-		this.tipoUsuario = tipoUsuario;
-	}
-
 	public boolean getStatus() {
 		return status;
 	}
 
 	public void setStatus(boolean status) {
 		this.status = status;
+	}
+
+	public Integer getTipo() {
+		return tipo;
+	}
+
+	public void setTipo(Integer tipo) {
+		this.tipo = tipo;
+	}
+
+	public String getSenha() {
+		return senha;
+	}
+
+	public void setSenha(String senha) {
+		this.senha = senha;
+	}
+
+	public String getTelefone1() {
+		return telefone1;
+	}
+
+	public void setTelefone1(String telefone1) {
+		this.telefone1 = telefone1;
+	}
+
+	public String getTelefone2() {
+		return telefone2;
+	}
+
+	public void setTelefone2(String telefone2) {
+		this.telefone2 = telefone2;
+	}
+
+	public String getTelefone3() {
+		return telefone3;
+	}
+
+	public void setTelefone3(String telefone3) {
+		this.telefone3 = telefone3;
 	}
 }

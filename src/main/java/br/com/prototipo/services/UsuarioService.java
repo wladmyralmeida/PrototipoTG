@@ -9,9 +9,12 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import br.com.prototipo.domain.Usuario;
+import br.com.prototipo.domain.enums.TipoUsuario;
 import br.com.prototipo.dto.UsuarioDTO;
+import br.com.prototipo.dto.UsuarioNewDTO;
 import br.com.prototipo.repositories.UsuarioRepository;
 import br.com.prototipo.services.exception.DataIntegrityException;
 import br.com.prototipo.services.exception.ObjectNotFoundException;
@@ -28,11 +31,15 @@ public class UsuarioService {
 				"Desculpe, seu objeto não foi encontrado! Id: " + id + ", Tipo: " + Usuario.class.getName()));
 	}
 
+	@Transactional
 	public Usuario insert(Usuario obj) {
 		obj.setId(null);
 		return repository.save(obj);
 	}
 
+	// Instacia o obj a partir do banco de dados (monitorado pelo jpa)
+	// Pega o obj e atualizo os dados com o obj enviado na requisição
+	// salva o newobj na base de dados.
 	public Usuario update(Usuario obj) {
 		Usuario newObj = find(obj.getId());
 		updateData(newObj, obj);
@@ -58,9 +65,22 @@ public class UsuarioService {
 	}
 
 	public Usuario fromDTO(UsuarioDTO objDTO) {
-		return new Usuario(objDTO.getId(), objDTO.getNome(), objDTO.getNumero(), 
-				null, objDTO.getOrganizacaoMilitar(), objDTO.getPelotao(), objDTO.getPatente(),
-				objDTO.getTipoSangue(), null, objDTO.getStatus());
+		return new Usuario(objDTO.getId(), objDTO.getNome(), objDTO.getNumero(), null, objDTO.getOrganizacaoMilitar(),
+				objDTO.getPelotao(), objDTO.getPatente(), objDTO.getTipoSangue(), null, objDTO.getStatus());
+	}
+
+	public Usuario fromDTO(UsuarioNewDTO objDTO) {
+		Usuario usu = new Usuario(null, objDTO.getNome(), objDTO.getNumero(), objDTO.getSenha(),
+				objDTO.getOrganizacaoMilitar(), objDTO.getPelotao(), objDTO.getPatente(), objDTO.getTipoSangue(),
+				TipoUsuario.toEnum(objDTO.getTipo()), objDTO.getStatus());
+		usu.getTelefones().add(objDTO.getTelefone1());
+		if (objDTO.getTelefone2() != null) {
+			usu.getTelefones().add(objDTO.getTelefone2());
+		}
+		if (objDTO.getTelefone3() != null) {
+			usu.getTelefones().add(objDTO.getTelefone3());
+		}
+		return usu;
 	}
 
 	private void updateData(Usuario newObj, Usuario obj) {
