@@ -32,6 +32,8 @@ public class Usuario implements Serializable {
 	private Integer id;
 	private String nome;
 	private Integer numero;
+	
+	private String email;
 	private String senha;
 	private String organizacaoMilitar;
 	private String pelotao;
@@ -63,12 +65,13 @@ public class Usuario implements Serializable {
 
 	}
 
-	public Usuario(Integer id, String nome, Integer numero, String senha, String organizacaoMilitar, String pelotao,
+	public Usuario(Integer id, String nome, Integer numero, String email, String senha, String organizacaoMilitar, String pelotao,
 			String patente, String tipoSangue, TipoUsuario tipoUsuario, boolean status) {
 		super();
 		this.id = id;
 		this.nome = nome;
 		this.numero = numero;
+		this.email = email;
 		this.senha = senha;
 		this.organizacaoMilitar = organizacaoMilitar;
 		this.pelotao = pelotao;
@@ -100,6 +103,14 @@ public class Usuario implements Serializable {
 
 	public void setNumero(Integer numero) {
 		this.numero = numero;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 	public String getSenha() {

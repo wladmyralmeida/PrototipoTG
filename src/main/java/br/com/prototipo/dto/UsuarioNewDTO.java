@@ -2,12 +2,15 @@ package br.com.prototipo.dto;
 
 import java.io.Serializable;
 
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 
 import org.hibernate.validator.constraints.Length;
 
+import br.com.prototipo.services.validation.UsuarioInsert;
 
 
+@UsuarioInsert
 public class UsuarioNewDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
@@ -15,6 +18,9 @@ public class UsuarioNewDTO implements Serializable {
 	@Length(min=5, max=120, message="O tamanho deve ser entre 5 e 120 caracteres")
 	private String nome;
 	private Integer numero;
+
+	@Email
+	private String email;
 	private String organizacaoMilitar;
 	private String pelotao;
 	private String patente;
@@ -48,6 +54,14 @@ public class UsuarioNewDTO implements Serializable {
 
 	public void setNumero(Integer numero) {
 		this.numero = numero;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 	public String getOrganizacaoMilitar() {

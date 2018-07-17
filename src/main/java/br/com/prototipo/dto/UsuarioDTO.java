@@ -2,12 +2,15 @@ package br.com.prototipo.dto;
 
 import java.io.Serializable;
 
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 
 import org.hibernate.validator.constraints.Length;
 
 import br.com.prototipo.domain.Usuario;
+import br.com.prototipo.services.validation.UsuarioUpdate;
 
+@UsuarioUpdate
 public class UsuarioDTO implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
@@ -19,6 +22,9 @@ public class UsuarioDTO implements Serializable {
 	private String nome;
 	
 	private Integer numero;
+	
+	@Email
+	private String email;
 	private String organizacaoMilitar;
 	private String pelotao;
 	private String patente;
@@ -34,6 +40,7 @@ public class UsuarioDTO implements Serializable {
 		id = obj.getId();
 		nome = obj.getNome();
 		numero = obj.getNumero();
+		email = obj.getEmail();
 		organizacaoMilitar = obj.getOrganizacaoMilitar();
 		pelotao = obj.getPelotao();
 		patente = obj.getPatente();
@@ -65,6 +72,14 @@ public class UsuarioDTO implements Serializable {
 
 	public void setNumero(Integer numero) {
 		this.numero = numero;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 	public String getOrganizacaoMilitar() {

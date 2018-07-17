@@ -65,12 +65,12 @@ public class UsuarioService {
 	}
 
 	public Usuario fromDTO(UsuarioDTO objDTO) {
-		return new Usuario(objDTO.getId(), objDTO.getNome(), objDTO.getNumero(), null, objDTO.getOrganizacaoMilitar(),
+		return new Usuario(objDTO.getId(), objDTO.getNome(), objDTO.getNumero(), objDTO.getEmail(), null, objDTO.getOrganizacaoMilitar(),
 				objDTO.getPelotao(), objDTO.getPatente(), objDTO.getTipoSangue(), null, objDTO.getStatus());
 	}
 
 	public Usuario fromDTO(UsuarioNewDTO objDTO) {
-		Usuario usu = new Usuario(null, objDTO.getNome(), objDTO.getNumero(), objDTO.getSenha(),
+		Usuario usu = new Usuario(null, objDTO.getNome(), objDTO.getNumero(), objDTO.getEmail(), objDTO.getSenha(),
 				objDTO.getOrganizacaoMilitar(), objDTO.getPelotao(), objDTO.getPatente(), objDTO.getTipoSangue(),
 				TipoUsuario.toEnum(objDTO.getTipo()), objDTO.getStatus());
 		usu.getTelefones().add(objDTO.getTelefone1());
@@ -86,6 +86,7 @@ public class UsuarioService {
 	private void updateData(Usuario newObj, Usuario obj) {
 		newObj.setNome(obj.getNome());
 		newObj.setNumero(obj.getNumero());
+		newObj.setEmail(obj.getEmail());
 		newObj.setOrganizacaoMilitar(obj.getOrganizacaoMilitar());
 		newObj.setPelotao(obj.getPelotao());
 		newObj.setPatente(obj.getPatente());

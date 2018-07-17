@@ -93,10 +93,10 @@ public class PrototipoTgApplication implements CommandLineRunner {
 		c2.getCategorias().addAll(Arrays.asList(cat5));
 		c3.getCategorias().addAll(Arrays.asList(cat1));
 
-		Usuario usu1 = new Usuario(null, "wlad almeida", 32, "www", "TG-07002", "Charlie", "Cabo", "A+",
+		Usuario usu1 = new Usuario(null, "wlad almeida", 32, "wladmyr@gmail.com", "www", "TG-07002", "Charlie", "Cabo", "A+",
 				TipoUsuario.ADMINISTRADOR, true);
 
-		Usuario usu2 = new Usuario(null, "almeida32", 23, "wlad23", "TG-07002", "Bravo", "Sub-Tenente", "O-",
+		Usuario usu2 = new Usuario(null, "almeida32", 23, "www@gmail.com", "wlad23", "TG-07002", "Bravo", "Sub-Tenente", "O-",
 				TipoUsuario.ADMINISTRADOR, true);
 
 		Servico s1 = new Servico(null, sdf.parse("09/10/2018 07:00"));
