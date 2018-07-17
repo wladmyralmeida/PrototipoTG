@@ -26,6 +26,7 @@ public class Cancao  implements Serializable {
 	private Integer id;
 	private String titulo;
 	private String descricao;
+	private double preco;
 	
 	@JsonBackReference
 	@ManyToMany
@@ -43,11 +44,12 @@ public class Cancao  implements Serializable {
 	public Cancao() {
 	}
 
-	public Cancao(Integer id, String titulo, String descricao) {
+	public Cancao(Integer id, String titulo, String descricao, double preco) {
 		super();
 		this.id = id;
 		this.titulo = titulo;
 		this.descricao = descricao;
+		this.preco = preco;
 	}
 
 	public Integer getId() {
@@ -83,13 +85,20 @@ public class Cancao  implements Serializable {
 		this.categorias = categorias;
 	}
 
-	//JSON IGNOREEEEEEEEEEEEEEEEEEEEE
 	public Set<ItemPedido> getItens() {
 		return itens;
 	}
 
 	public void setItens(Set<ItemPedido> itens) {
 		this.itens = itens;
+	}
+
+	public double getPreco() {
+		return preco;
+	}
+
+	public void setPreco(double preco) {
+		this.preco = preco;
 	}
 
 	@Override
@@ -113,7 +122,4 @@ public class Cancao  implements Serializable {
 			return false;
 		return true;
 	}
-	
-	
-
 }

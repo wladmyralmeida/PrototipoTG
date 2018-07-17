@@ -78,13 +78,13 @@ public class PrototipoTgApplication implements CommandLineRunner {
 		Categoria cat6 = new Categoria(null, "Diversas");
 
 		Cancao c1 = new Cancao(null, "Olha a Dona Mag",
-				"Olha a Dona MAG no Terreno camuflada, Pronta para ser a qualquer hora acionada.");
+				"Olha a Dona MAG no Terreno camuflada, Pronta para ser a qualquer hora acionada.", 12.0);
 
 		Cancao c2 = new Cancao(null, "Olê mulher rendeira",
-				"Olê mulher rendeira, Olê mulher rendá, Tu me ensina a fazer renda.");
+				"Olê mulher rendeira, Olê mulher rendá, Tu me ensina a fazer renda.", 10.0);
 
 		Cancao c3 = new Cancao(null, "Fui chamado pra guerrear",
-				"Fui chamado para guerrear mas na hora h, quem diria.");
+				"Fui chamado para guerrear mas na hora h, quem diria.", 15.0);
 
 		cat1.getCancoes().addAll(Arrays.asList(c1, c3));
 		cat5.getCancoes().addAll(Arrays.asList(c2));
@@ -160,10 +160,10 @@ public class PrototipoTgApplication implements CommandLineRunner {
 		pedRep.saveAll(Arrays.asList(ped1, ped2));
 		pagRep.saveAll(Arrays.asList(pgt1, pgt2));
 
-		ItemPedido ip1 = new ItemPedido(ped1, c1, 10.00, 2, 20.00);
-		ItemPedido ip2 = new ItemPedido(ped2, c2, 30.00, 4, 30.00);
-		ItemPedido ip3 = new ItemPedido(ped2, c3, 50.00, 6, 50.00);
-
+		ItemPedido ip1 = new ItemPedido(ped1, c1, 1.00, 2, 4.00);
+		ItemPedido ip2 = new ItemPedido(ped2, c2, 1.00, 4, 3.00);
+		ItemPedido ip3 = new ItemPedido(ped2, c3, 2.00, 6, 5.00);
+		
 		ped1.getItens().addAll(Arrays.asList(ip1));
 		ped2.getItens().addAll(Arrays.asList(ip2, ip3));
 

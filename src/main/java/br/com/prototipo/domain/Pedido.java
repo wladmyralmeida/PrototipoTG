@@ -27,7 +27,6 @@ public class Pedido implements Serializable {
 	private Integer id;
 	private Date instante;
 	
-	@JsonIgnore
 	@OneToOne(cascade=CascadeType.ALL, mappedBy="pedido")
 	private Pagamento pagamento;
 	
@@ -36,7 +35,6 @@ public class Pedido implements Serializable {
 	@JoinColumn(name="usuario_id")
 	private Usuario usuario;
 
-	@JsonIgnore
 	@OneToMany(mappedBy="id.pedido")
 	private Set<ItemPedido> itens = new HashSet<>();
 
@@ -49,6 +47,14 @@ public class Pedido implements Serializable {
 		this.id = id;
 		this.instante = instante;
 		this.usuario = usuario;
+	}
+	
+	public double getValorTotal() {
+		double soma = 0;
+		for(ItemPedido ip : itens) {
+			soma = soma + ip.getSubTotal();
+		}
+		return soma;
 	}
 
 	public Integer getId() {
