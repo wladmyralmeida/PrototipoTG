@@ -11,7 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import br.com.prototipo.domain.Usuario;
 import br.com.prototipo.dto.UsuarioNewDTO;
 import br.com.prototipo.repositories.UsuarioRepository;
-import br.com.prototipo.resources.exception.FieldMessage;
+import br.com.prototipo.services.exception.FieldMessage;
 
 public class UsuarioInsertValidator implements ConstraintValidator<UsuarioInsert, UsuarioNewDTO> {
 	

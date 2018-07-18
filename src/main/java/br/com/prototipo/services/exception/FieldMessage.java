@@ -1,4 +1,4 @@
-package br.com.prototipo.resources.exception;
+package br.com.prototipo.services.exception;
 
 import java.io.Serializable;
 

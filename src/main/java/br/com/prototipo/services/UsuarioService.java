@@ -65,8 +65,9 @@ public class UsuarioService {
 	}
 
 	public Usuario fromDTO(UsuarioDTO objDTO) {
-		return new Usuario(objDTO.getId(), objDTO.getNome(), objDTO.getNumero(), objDTO.getEmail(), null, objDTO.getOrganizacaoMilitar(),
-				objDTO.getPelotao(), objDTO.getPatente(), objDTO.getTipoSangue(), null, objDTO.getStatus());
+		return new Usuario(objDTO.getId(), objDTO.getNome(), objDTO.getNumero(), objDTO.getEmail(), null,
+				objDTO.getOrganizacaoMilitar(), objDTO.getPelotao(), objDTO.getPatente(), objDTO.getTipoSangue(), null,
+				objDTO.getStatus());
 	}
 
 	public Usuario fromDTO(UsuarioNewDTO objDTO) {

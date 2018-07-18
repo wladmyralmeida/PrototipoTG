@@ -5,6 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.Arrays;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import br.com.prototipo.domain.Cancao;
@@ -21,47 +22,34 @@ import br.com.prototipo.domain.Relatorio;
 import br.com.prototipo.domain.Servico;
 import br.com.prototipo.domain.Usuario;
 import br.com.prototipo.domain.enums.EstadoPagamento;
+import br.com.prototipo.domain.enums.Perfil;
 import br.com.prototipo.domain.enums.TipoUsuario;
 import br.com.prototipo.repositories.CancaoRepository;
 import br.com.prototipo.repositories.CategoriaRepository;
-import br.com.prototipo.repositories.DesempenhoRepository;
-import br.com.prototipo.repositories.EstudoRepository;
 import br.com.prototipo.repositories.ItemPedidoRepository;
 import br.com.prototipo.repositories.PagamentoRepository;
 import br.com.prototipo.repositories.PedidoRepository;
-import br.com.prototipo.repositories.RankingRepository;
-import br.com.prototipo.repositories.RelatorioRepository;
-import br.com.prototipo.repositories.ServicoRepository;
 import br.com.prototipo.repositories.UsuarioRepository;
 
 @Service
 public class DBService {
 
 	@Autowired
-	private CategoriaRepository categoriaRep;
+	private BCryptPasswordEncoder pe;
 	@Autowired
-	private CancaoRepository cancaoRep;
+	private CategoriaRepository categoriaRepository;
 	@Autowired
-	private ServicoRepository servicoRep;
+	private CancaoRepository produtoRepository;
 	@Autowired
-	private UsuarioRepository usuarioRep;
+	private UsuarioRepository usuarioRepository;
 	@Autowired
-	private DesempenhoRepository desempenhoRep;
+	private PedidoRepository pedidoRepository;
 	@Autowired
-	private RelatorioRepository relatorioRep;
+	private PagamentoRepository pagamentoRepository;
 	@Autowired
-	private EstudoRepository estudoRep;
-	@Autowired
-	private PedidoRepository pedRep;
-	@Autowired
-	private PagamentoRepository pagRep;
-	@Autowired
-	private ItemPedidoRepository itemPedRep;
-	@Autowired
-	private RankingRepository rankingRep;
-
-	public void instanciateTestDatabase() throws ParseException {
-
+	private ItemPedidoRepository itemPedidoRepository;
+	
+	public void instantiateTestDatabase() throws ParseException {
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
 
 		Categoria cat1 = new Categoria(null, "Infantaria");
@@ -87,16 +75,27 @@ public class DBService {
 		c2.getCategorias().addAll(Arrays.asList(cat5));
 		c3.getCategorias().addAll(Arrays.asList(cat1));
 
-		Usuario usu1 = new Usuario(null, "wlad almeida", 32, "wladmyr@gmail.com", "www", "TG-07002", "Charlie", "Cabo",
-				"A+", TipoUsuario.ADMINISTRADOR, true);
-
-		Usuario usu2 = new Usuario(null, "almeida32", 23, "www@gmail.com", "wlad23", "TG-07002", "Bravo", "Sub-Tenente",
-				"O-", TipoUsuario.ADMINISTRADOR, true);
 
 		Servico s1 = new Servico(null, sdf.parse("09/10/2018 07:00"));
 		Servico s2 = new Servico(null, sdf.parse("20/10/2018 19:00"));
 		Servico s3 = new Servico(null, sdf.parse("11/05/2018 07:00"));
 
+		
+		Estudo e1 = new Estudo(null, "Provas", "Prova EsFCEx");
+		Estudo e2 = new Estudo(null, "Slides", "Slide Escolta Ofensiva");
+		Estudo e3 = new Estudo(null, "Material Diverso", "Como calcular Azimute");
+
+		categoriaRepository.saveAll(Arrays.asList(cat1, cat2, cat3, cat4, cat5, cat6));
+		produtoRepository.saveAll(Arrays.asList(c1, c2, c3));
+		
+		
+		Usuario usu1 = new Usuario(null, "wlad almeida", 32, "wladmyr@gmail.com", "www", "TG-07002", "Charlie", "Cabo",
+				"A+", TipoUsuario.ADMINISTRADOR, true);
+
+		Usuario usu2 = new Usuario(null, "almeida32", 23, "www@gmail.com", "wlad23", "TG-07002", "Bravo", "Sub-Tenente",
+				"O-", TipoUsuario.ADMINISTRADOR, true);
+		usu2.addPerfil(Perfil.ADMIN);
+		
 		usu1.getServicos().addAll(Arrays.asList(s1, s2));
 		usu2.getServicos().addAll(Arrays.asList(s3));
 
@@ -106,7 +105,11 @@ public class DBService {
 		s1.getUsuarios().addAll(Arrays.asList(usu1, usu2));
 		s2.getUsuarios().addAll(Arrays.asList(usu1));
 		s3.getUsuarios().addAll(Arrays.asList(usu2));
-
+		
+		Ranking rk1 = new Ranking(null, "Conjunto Completo Exército Brasileiro");
+		rk1.getUsuarios().add(usu1);
+		rk1.getUsuarios().add(usu2);
+		
 		Desempenho dp1 = new Desempenho(null, "4 Km de Corrida", "7 Km de Corrida", 45, 30, 4.5, 15,
 				"Melhorar Abdominais", usu1);
 		Desempenho dp2 = new Desempenho(null, "3 Séries de 5 Barras", "3 Séries de 8 Barras", 25, 100, 7.0, 10,
@@ -121,49 +124,33 @@ public class DBService {
 		usu1.setRelatorio(r1);
 		usu2.setRelatorio(r2);
 
-		Estudo e1 = new Estudo(null, "Provas", "Prova EsFCEx");
-		Estudo e2 = new Estudo(null, "Slides", "Slide Escolta Ofensiva");
-		Estudo e3 = new Estudo(null, "Material Diverso", "Como calcular Azimute");
-
-		Ranking rk1 = new Ranking(null, "Conjunto Completo Exército Brasileiro");
-		rk1.getUsuarios().add(usu1);
-		rk1.getUsuarios().add(usu2);
-
-		usuarioRep.saveAll(Arrays.asList(usu1, usu2));
-		desempenhoRep.saveAll(Arrays.asList(dp1, dp2));
-		rankingRep.saveAll(Arrays.asList(rk1));
-		relatorioRep.saveAll(Arrays.asList(r1, r2));
-		categoriaRep.saveAll(Arrays.asList(cat1, cat2, cat3, cat4, cat5, cat6));
-		cancaoRep.saveAll(Arrays.asList(c1, c2, c3));
-		servicoRep.saveAll(Arrays.asList(s1, s2, s3));
-		estudoRep.saveAll(Arrays.asList(e1, e2, e3));
-
-		// PARTE DE PAGAMENTO
-		Pedido ped1 = new Pedido(null, sdf.parse("31/10/2018 17:20"), usu2);
-		Pedido ped2 = new Pedido(null, sdf.parse("01/10/2018 13:00"), usu1);
-
-		Pagamento pgt1 = new PagamentoComCartao(null, EstadoPagamento.QUITADO, ped1, 12);
-		ped1.setPagamento(pgt1);
-		Pagamento pgt2 = new PagamentoComBoleto(null, EstadoPagamento.PENDENTE, ped2, sdf.parse("02/02/2019 12:00"),
-				sdf.parse("01/01/2019 00:00"));
-		ped2.setPagamento(pgt2);
-
-		usu1.getPedidos().addAll(Arrays.asList(ped2));
-		usu2.getPedidos().addAll(Arrays.asList(ped1));
-
-		pedRep.saveAll(Arrays.asList(ped1, ped2));
-		pagRep.saveAll(Arrays.asList(pgt1, pgt2));
-
-		ItemPedido ip1 = new ItemPedido(ped1, c1, 1.00, 2, 4.00);
-		ItemPedido ip2 = new ItemPedido(ped2, c2, 1.00, 4, 3.00);
-		ItemPedido ip3 = new ItemPedido(ped2, c3, 2.00, 6, 5.00);
-
-		ped1.getItens().addAll(Arrays.asList(ip1));
-		ped2.getItens().addAll(Arrays.asList(ip2, ip3));
-
+		usuarioRepository.saveAll(Arrays.asList(usu1, usu2));
+		
+		Pedido ped1 = new Pedido(null, sdf.parse("30/09/2017 10:32"), usu1);
+		Pedido ped2 = new Pedido(null, sdf.parse("10/10/2017 19:35"), usu1);
+		
+		Pagamento pagto1 = new PagamentoComCartao(null, EstadoPagamento.QUITADO, ped1, 6);
+		ped1.setPagamento(pagto1);
+		
+		Pagamento pagto2 = new PagamentoComBoleto(null, EstadoPagamento.PENDENTE, ped2, sdf.parse("20/10/2017 00:00"), null);
+		ped2.setPagamento(pagto2);
+		
+		usu1.getPedidos().addAll(Arrays.asList(ped1, ped2));
+		
+		pedidoRepository.saveAll(Arrays.asList(ped1, ped2));
+		pagamentoRepository.saveAll(Arrays.asList(pagto1, pagto2));
+		
+		ItemPedido ip1 = new ItemPedido(ped1, c1, 0.00, 1, 2000.00);
+		ItemPedido ip2 = new ItemPedido(ped1, c3, 0.00, 2, 80.00);
+		ItemPedido ip3 = new ItemPedido(ped2, c2, 100.00, 1, 800.00);
+		
+		ped1.getItens().addAll(Arrays.asList(ip1, ip2));
+		ped2.getItens().addAll(Arrays.asList(ip3));
+		
 		c1.getItens().addAll(Arrays.asList(ip1));
-		c2.getItens().addAll(Arrays.asList(ip2, ip3));
-
-		itemPedRep.saveAll(Arrays.asList(ip1, ip2, ip3));
+		c2.getItens().addAll(Arrays.asList(ip3));
+		c3.getItens().addAll(Arrays.asList(ip2));
+		
+		itemPedidoRepository.saveAll(Arrays.asList(ip1, ip2, ip3));		
 	}
 }

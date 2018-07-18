@@ -3,6 +3,8 @@ package br.com.prototipo.resources.exception;
 import java.util.ArrayList;
 import java.util.List;
 
+import br.com.prototipo.services.exception.FieldMessage;
+
 public class ValidationError extends StandardError {
 	
 	private static final long serialVersionUID = 1L;

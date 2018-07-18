@@ -14,7 +14,7 @@ import org.springframework.web.servlet.HandlerMapping;
 import br.com.prototipo.domain.Usuario;
 import br.com.prototipo.dto.UsuarioDTO;
 import br.com.prototipo.repositories.UsuarioRepository;
-import br.com.prototipo.resources.exception.FieldMessage;
+import br.com.prototipo.services.exception.FieldMessage;
 
 public class UsuarioUpdateValidator implements ConstraintValidator<UsuarioUpdate, UsuarioDTO> {
 
